@@ -27,5 +27,5 @@ int	ft_atoi(const char *str)
 		nbr = nbr * 10 + str[i] - '0';
 		i++;
 	}
-	return (nbr * sign);
+	return ((int)(nbr * sign));
 }
