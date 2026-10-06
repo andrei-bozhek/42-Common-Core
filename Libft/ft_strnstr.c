@@ -1,18 +1,18 @@
 #include "libft.h"
 
-char	*ft_strnstr(const char * s1, const char * s2, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
-	size_t	s2_len;
+	size_t	little_len;
 
-	if (!s1[0])
-		return ((char *)s2);
-	s2_len = ft_strlen(s1);
+	if (!little[0])
+		return ((char *)big);
+	little_len = ft_strlen(little);
 	i = 0;
-	while (s2[i] && i <= len)
+	while (big[i] && i + little_len <= len)
 	{
-		if (ft_strncmp(&s1[i], s2, s2_len))
-			return ((char *)&s1[i]);
+		if (ft_strncmp(&big[i], little, little_len) == 0)
+			return ((char *)&big[i]);
 		i++;
 	}
 	return (NULL);
