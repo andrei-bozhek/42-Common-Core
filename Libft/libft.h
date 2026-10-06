@@ -41,8 +41,8 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
 typedef struct s_list
 {
-void *content;
-struct s_list *next;
-}
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
 #endif
