@@ -12,33 +12,41 @@
 
 #include "libft.h"
 
+static void	ft_copy_forward(unsigned char *dst,
+		const unsigned char *src, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+}
+
+static void	ft_copy_backward(unsigned char *dst,
+		const unsigned char *src, size_t len)
+{
+	while (len > 0)
+	{
+		len--;
+		dst[len] = src[len];
+	}
+}
+
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	unsigned char		*destination;
 	const unsigned char	*source;
-	size_t				i;
 
 	if (dst == src || len == 0)
 		return (dst);
 	destination = (unsigned char *)dst;
 	source = (const unsigned char *)src;
 	if (destination < source)
-	{
-		i = 0;
-		while (i < len)
-		{
-			destination[i] = source[i];
-			i++;
-		}
-	}
+		ft_copy_forward(destination, source, len);
 	else
-	{
-		i = len;
-		while (i > 0)
-		{
-			i--;
-			destination[i] = source[i];
-		}
-	}
+		ft_copy_backward(destination, source, len);
 	return (dst);
 }
