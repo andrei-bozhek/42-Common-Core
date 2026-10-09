@@ -186,6 +186,6 @@ also checked against the project subject and BSD-compatible documentation.
 
 ### AI Usage
 
-AI tools were used as a learning and review aid during the project.
+AI tools were used as a learning aid during the project.
 They were mainly used to clarify C concepts such as pointers, memory allocation,
 function pointers, and linked lists.
