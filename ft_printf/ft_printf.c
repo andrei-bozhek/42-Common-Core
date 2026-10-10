@@ -21,24 +21,52 @@ static int	ft_nbr_len(int nbr)
 	return (len);
 }
 
+static int	ft_unbr_len(unsigned int n)
+{
+	int		len;
+
+	len = 1;
+	while (n >= 10)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+static void	ft_putunbr_fd(unsigned int n, int fd)
+{
+	if (n >= 10)
+		ft_putunbr_fd(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int		i;
-	int		int_value;
-	char	*str_value;
-	int		count;
+	int				i;
+	int				int_value;
+	char			*str_value;	
+	unsigned int	un_int_value;
+	int				count;
 
 	va_start(args, format);
 	i = 0;
 	count = 0;
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1] == 'd')
+		if (format[i] == '%' && ( format[i + 1] == 'd' || format[i + 1] == 'i'))
 		{
 			int_value = va_arg(args, int);
-			ft_putnbr_fd(int_value, 1);
+			ft_putunbr_fd(int_value, 1);
 			count += ft_nbr_len(int_value);
+			i += 2;
+		}
+		if (format[i] == '%' && format[i + 1] == 'u')
+		{
+			un_int_value = va_arg(args, unsigned int);
+			ft_putunbr_fd(un_int_value, 1);
+			count += ft_unbr_len((int)un_int_value);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1]  == 'c')
@@ -110,6 +138,16 @@ int	main(void)
 	count = ft_printf("%s%s\n", "Hello", "World");
 	ft_printf("count = %d\n", count);
 	count = ft_printf("%s\n", (char *)NULL);
+	ft_printf("count = %d\n", count);
+	ft_printf("\n");
+	// %u
+	count = ft_printf("%u\n", 0U);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%u\n", 42U);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%u\n", 2147483648U);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%u\n", UINT_MAX);
 	ft_printf("count = %d\n", count);
 	ft_printf("\n");
 	// %%
