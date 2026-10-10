@@ -25,7 +25,8 @@ int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	int		i;
-	int		value;
+	int		int_value;
+	char	*str_value;
 	int		count;
 
 	va_start(args, format);
@@ -35,16 +36,25 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%' && format[i + 1] == 'd')
 		{
-			value = va_arg(args, int);
-			ft_putnbr_fd(value, 1);
-			count += ft_nbr_len(value);
+			int_value = va_arg(args, int);
+			ft_putnbr_fd(int_value, 1);
+			count += ft_nbr_len(int_value);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1]  == 'c')
 		{
-			value = va_arg(args, int);
-			ft_putchar_fd(value, 1);
+			int_value = va_arg(args, int);
+			ft_putchar_fd(int_value, 1);
 			count++;
+			i += 2;
+		}
+		else if (format[i] == '%' && format[i + 1]  == 's')
+		{
+			str_value = va_arg(args, char*);
+			if (str_value == NULL)
+				str_value = "(null)";
+			ft_putstr_fd(str_value, 1);
+			count += ft_strlen(str_value);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1]  == '%')
@@ -90,6 +100,16 @@ int	main(void)
 	count = ft_printf("%c%c%c%c%c%c\n", 'A','B','C','D','E','F');
 	ft_printf("count = %d\n", count);
 	count = ft_printf("A%cB\n", '\0');
+	ft_printf("count = %d\n", count);
+	ft_printf("\n");
+	// %s
+	count = ft_printf("Hello %s!\n", "42");
+	ft_printf("count = %d\n", count);
+	count = ft_printf("A%sB\n", "");
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%s%s\n", "Hello", "World");
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%s\n", (char *)NULL);
 	ft_printf("count = %d\n", count);
 	ft_printf("\n");
 	// %%
