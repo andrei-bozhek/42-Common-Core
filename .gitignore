@@ -61,11 +61,8 @@ dkms.conf
 desktop.ini
 **/desktop.ini
 
-# Ignore files without extensions
-!*/
-*
-!*.*
-
-# Keep Git configuration files
-!.gitignore
-!.gitattributes
+# Build output
+.build/
+*.o
+*.a
+a.out
