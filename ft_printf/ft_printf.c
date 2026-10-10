@@ -59,6 +59,7 @@ int	ft_printf(const char *format, ...)
 	int				int_value;
 	char			*str_value;	
 	unsigned int	un_int_value;
+	void			*pointer;
 	int				count;
 
 	va_start(args, format);
@@ -90,6 +91,22 @@ int	ft_printf(const char *format, ...)
 		{
 			un_int_value = va_arg(args, unsigned int);
 			count += ft_putnbr_base(un_int_value, "0123456789ABCDEF", 16);
+			i += 2;
+		}
+		else if (format[i] == '%' && format[i + 1] == 'p')
+		{
+			pointer = va_arg(args, void*);
+			if (pointer == NULL)
+			{
+				ft_putstr_fd("(nil)",1);
+				count += 5;
+			}
+			else
+			{
+				ft_putstr_fd("0x", 1);
+				count += 2;
+				count += ft_putnbr_base((unsigned long)pointer, "0123456789abcdef", 16);
+			}			
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1]  == 'c')
@@ -210,5 +227,14 @@ int	main(void)
 	ft_printf("count = %d\n", count);
 	count = ft_printf("50%%%%\n");
 	ft_printf("count = %d\n", count);
+	ft_printf("\n");
+	//%p comparsion
+	int	n = 42;
+	int	*ptr = &n;
+
+	printf("Original: %p\n", (void *)ptr);
+	ft_printf("Custom:   %p\n", (void *)ptr);
+	printf("Original: %p\n", (void *)NULL);
+	ft_printf("Custom:   %p\n", (void *)NULL);
 	return (0);
 }
