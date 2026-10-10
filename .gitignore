@@ -60,3 +60,12 @@ dkms.conf
 # MS Windows #
 desktop.ini
 **/desktop.ini
+
+# Ignore files without extensions
+!*/
+*
+!*.*
+
+# Keep Git configuration files
+!.gitignore
+!.gitattributes
