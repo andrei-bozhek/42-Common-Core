@@ -41,6 +41,17 @@ static void	ft_putunbr_fd(unsigned int n, int fd)
 	ft_putchar_fd(n % 10 + '0', fd);
 }
 
+static int	ft_putnbr_base(unsigned long n, char *base, int base_len)
+{
+	int	count;
+
+	count = 0;
+	if (n >= (unsigned long)base_len)
+		count += ft_putnbr_base(n / base_len, base, base_len);
+	ft_putchar_fd(base[n % base_len], 1);
+	return (count + 1);
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
@@ -67,6 +78,18 @@ int	ft_printf(const char *format, ...)
 			un_int_value = va_arg(args, unsigned int);
 			ft_putunbr_fd(un_int_value, 1);
 			count += ft_unbr_len(un_int_value);
+			i += 2;
+		}
+		else if (format[i] == '%' && format[i + 1] == 'x')
+		{
+			un_int_value = va_arg(args, unsigned int);
+			count += ft_putnbr_base(un_int_value, "0123456789abcdef", 16);
+			i += 2;
+		}
+		else if (format[i] == '%' && format[i + 1] == 'X')
+		{
+			un_int_value = va_arg(args, unsigned int);
+			count += ft_putnbr_base(un_int_value, "0123456789ABCDEF", 16);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1]  == 'c')
@@ -120,6 +143,46 @@ int	main(void)
 	count = ft_printf("\n");
 	ft_printf("count = %d\n", count);
 	ft_printf("\n");
+	// %u
+	count = ft_printf("%u\n", 0U);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%u\n", 42U);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%u\n", 2147483648U);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%u\n", UINT_MAX);
+	ft_printf("count = %d\n", count);
+	ft_printf("\n");
+	// %x
+	count = ft_printf("%x\n", 0);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%x\n", 9);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%x\n", 10);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%x\n", 255);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%x\n", 256);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%x\n", 4294967295);
+	ft_printf("count = %d\n", count);
+	ft_printf("\n");
+	// %X
+	count = ft_printf("%X\n", 0);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%X\n", 9);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%X\n", 10);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%X\n", 255);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%X\n", 256);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%X\n", 4294967295);
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%X\n", UINT_MAX);
+	ft_printf("count = %d\n", count);
+	ft_printf("\n");
 	// %c
 	count = ft_printf("%c\n", 'A');
 	ft_printf("count = %d\n", count);
@@ -138,16 +201,6 @@ int	main(void)
 	count = ft_printf("%s%s\n", "Hello", "World");
 	ft_printf("count = %d\n", count);
 	count = ft_printf("%s\n", (char *)NULL);
-	ft_printf("count = %d\n", count);
-	ft_printf("\n");
-	// %u
-	count = ft_printf("%u\n", 0U);
-	ft_printf("count = %d\n", count);
-	count = ft_printf("%u\n", 42U);
-	ft_printf("count = %d\n", count);
-	count = ft_printf("%u\n", 2147483648U);
-	ft_printf("count = %d\n", count);
-	count = ft_printf("%u\n", UINT_MAX);
 	ft_printf("count = %d\n", count);
 	ft_printf("\n");
 	// %%
