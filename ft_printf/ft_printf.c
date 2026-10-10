@@ -58,15 +58,15 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%' && ( format[i + 1] == 'd' || format[i + 1] == 'i'))
 		{
 			int_value = va_arg(args, int);
-			ft_putunbr_fd(int_value, 1);
+			ft_putnbr_fd(int_value, 1);
 			count += ft_nbr_len(int_value);
 			i += 2;
 		}
-		if (format[i] == '%' && format[i + 1] == 'u')
+		else if (format[i] == '%' && format[i + 1] == 'u')
 		{
 			un_int_value = va_arg(args, unsigned int);
 			ft_putunbr_fd(un_int_value, 1);
-			count += ft_unbr_len((int)un_int_value);
+			count += ft_unbr_len(un_int_value);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1]  == 'c')
