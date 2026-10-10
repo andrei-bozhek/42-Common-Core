@@ -1,5 +1,5 @@
-#include <stdarg.h>
-#include <stdio.h>
+#include "ft_printf.h"
+#include "libft/libft.h"
 
 int	ft_printf(const char *format, ...)
 {
@@ -14,12 +14,12 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%' && format[i+1] == 'd')
 		{
 			value = va_arg(args, int);
-			printf("%d", value);
+			ft_putnbr_fd(value, 1);
 			i += 2;
 		}
 		else
 		{
-			putchar(format[i]);
+			ft_putchar_fd(format[i], 1);
 			i++;
 		}
 	}
@@ -30,5 +30,6 @@ int	ft_printf(const char *format, ...)
 int	main(void)
 {
 	ft_printf("age = %d T_T\n", 39);
+	ft_printf("A=%d B=%d\n", 10, 20);
 	return (0);
 }
