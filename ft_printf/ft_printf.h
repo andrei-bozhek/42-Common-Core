@@ -3,6 +3,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <limits.h>
 
 int	ft_printf(const char *format, ...);
 
