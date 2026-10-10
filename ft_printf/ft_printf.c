@@ -40,6 +40,19 @@ int	ft_printf(const char *format, ...)
 			count += ft_nbr_len(value);
 			i += 2;
 		}
+		else if (format[i] == '%' && format[i + 1]  == 'c')
+		{
+			value = va_arg(args, int);
+			ft_putchar_fd(value, 1);
+			count++;
+			i += 2;
+		}
+		else if (format[i] == '%' && format[i + 1]  == '%')
+		{
+			ft_putchar_fd('%', 1);
+			count++;
+			i += 2;
+		}
 		else
 		{
 			ft_putchar_fd(format[i], 1);
@@ -55,6 +68,7 @@ int	main(void)
 {	
 	int	count;
 
+	// %d
 	count = ft_printf("age = %d T_T\n", 39);
 	ft_printf("count = %d\n", count);
 	count = ft_printf("A=%d B=%d\n", 10, 20);
@@ -65,7 +79,25 @@ int	main(void)
 	ft_printf("count = %d\n", count);
 	count = ft_printf("%d\n", 42);
 	ft_printf("count = %d\n", count);
-	count = ft_printf("");
+	count = ft_printf("\n");
+	ft_printf("count = %d\n", count);
+	ft_printf("\n");
+	// %c
+	count = ft_printf("%c\n", 'A');
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%c\n", 'Z');
+	ft_printf("count = %d\n", count);
+	count = ft_printf("%c%c%c%c%c%c\n", 'A','B','C','D','E','F');
+	ft_printf("count = %d\n", count);
+	count = ft_printf("A%cB\n", '\0');
+	ft_printf("count = %d\n", count);
+	ft_printf("\n");
+	// %%
+	count = ft_printf("50%%\n");
+	ft_printf("count = %d\n", count);
+	count = ft_printf("50%%%\n");
+	ft_printf("count = %d\n", count);
+	count = ft_printf("50%%%%\n");
 	ft_printf("count = %d\n", count);
 	return (0);
 }
