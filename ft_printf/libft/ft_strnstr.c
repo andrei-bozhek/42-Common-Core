@@ -6,7 +6,7 @@
 /*   By: abozhek <abozhek@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 18:22:28 by abozhek           #+#    #+#             */
-/*   Updated: 2026/10/08 18:36:17 by abozhek          ###   ########.fr       */
+/*   Updated: 2026/10/11 19:34:06 by abozhek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		return ((char *)big);
 	little_len = ft_strlen(little);
 	i = 0;
-	while (big[i] && i + little_len <= len)
+	while (i < len && big[i])
 	{
-		if (ft_strncmp(&big[i], little, little_len) == 0)
+		if (little_len <= len - i
+			&& ft_strncmp(&big[i], little, little_len) == 0)
 			return ((char *)&big[i]);
 		i++;
 	}

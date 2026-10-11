@@ -6,7 +6,7 @@
 /*   By: abozhek <abozhek@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 18:20:27 by abozhek           #+#    #+#             */
-/*   Updated: 2026/10/08 18:27:49 by abozhek          ###   ########.fr       */
+/*   Updated: 2026/10/11 19:35:14 by abozhek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	*ft_calloc(size_t count, size_t size)
 
 	if (size != 0 && count > (size_t)-1 / size)
 		return (NULL);
+	if (count == 0 || size == 0)
+		return (malloc(1));
 	total = count * size;
 	pointer = malloc(total);
 	if (!pointer)
