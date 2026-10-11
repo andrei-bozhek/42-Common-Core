@@ -97,6 +97,29 @@ static int	ft_putnbr_base(unsigned long n, char *base, int len)
 	if (result == -1)
 		return (-1);
 	return(result + count);
+	if (n >= 10)
+		ft_putunbr_fd(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
+}
+
+static void	ft_putnbr_base(unsigned long n, char *base, int len)
+{
+	if (n >= (unsigned long)len)
+		ft_putnbr_base(n / len, base, len);
+	ft_putchar_fd(base[n % len], 1);
+}
+
+static int	ft_base_numlen(unsigned long n, int base_len)
+{
+	int	len;
+
+	len = 1;
+	while (n >= (unsigned long)base_len)
+	{
+		n /= base_len;
+		len++;
+	}
+	return (len);
 }
 
 int	ft_printf(const char *format, ...)
@@ -149,6 +172,8 @@ int	ft_printf(const char *format, ...)
 				return (-1);
 			}
 			count += result;
+			ft_putnbr_base(un_int_value, "0123456789abcdef", 16);
+			count += ft_base_numlen(un_int_value, 16);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1] == 'X')
@@ -161,6 +186,8 @@ int	ft_printf(const char *format, ...)
 				return (-1);
 			}
 			count += result;
+			ft_putnbr_base(un_int_value, "0123456789ABCDEF", 16);
+			count += ft_base_numlen(un_int_value, 16);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1] == 'p')
@@ -192,6 +219,11 @@ int	ft_printf(const char *format, ...)
 					return (-1);
 				}
 				count += result;
+			}
+				ft_putstr_fd("0x", 1);
+				count += 2;
+				ft_putnbr_base((unsigned long)pointer, "0123456789abcdef", 16);
+				count += ft_base_numlen((unsigned long)pointer, 16);
 			}
 			i += 2;
 		}
