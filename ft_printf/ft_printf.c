@@ -91,6 +91,53 @@ static int	ft_putnbr_base(unsigned long n, char *base, int len)
 	return(result + count);
 }
 
+static int	ft_print_pointer(void *ptr)
+{
+	int	count;
+	int	result;
+
+	if (ptr == NULL)
+		return (ft_putstr_fd("(nil)", 1));
+	count = ft_putstr_fd("0x", 1);
+	if (count == -1)
+		return (-1);
+	result = ft_putnbr_base((unsigned long)ptr,
+			"0123456789abcdef", 16);
+	if (result == -1)
+		return (-1);
+	return (count + result);
+}
+
+static int	ft_print_string(char *s)
+{
+	if (s == NULL)
+		s = "(null)";
+	return (ft_putstr_fd(s, 1));
+}
+
+static int	ft_print_conversion(char type, va_list *args)
+{
+	if (type == 'd' || type == 'i')
+		return (ft_putnbr_fd(va_arg(*args, int), 1));
+	if (type == 'u')
+		return (ft_putunbr_fd(va_arg(*args, unsigned int), 1));
+	if (type == 'x')
+		return (ft_putnbr_base(va_arg(*args, unsigned int),
+				"0123456789abcdef", 16));
+	if (type == 'X')
+		return (ft_putnbr_base(va_arg(*args, unsigned int),
+				"0123456789ABCDEF", 16));
+	if (type == 'p')
+		return (ft_print_pointer(va_arg(*args, void *)));
+	if (type == 'c')
+		return (ft_putchar_fd(va_arg(*args, int), 1));
+	if (type == 's')
+		return (ft_print_string(va_arg(*args, char *)));
+	if (type == '%')
+		return (ft_putchar_fd('%', 1));
+	return (-1);
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
