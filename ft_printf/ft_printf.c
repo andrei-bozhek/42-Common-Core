@@ -8,10 +8,10 @@ int	ft_putchar_fd(char c, int fd)
 }
 
 int	ft_putstr_fd(char *s, int fd)
-{	
-	int count;
+{
+	int	count;
 	int	result;
-	
+
 	count = 0;
 	while (*s)
 	{
@@ -20,8 +20,8 @@ int	ft_putstr_fd(char *s, int fd)
 			return (-1);
 		count += result;
 		s++;
-	}	
-	return(count);
+	}
+	return (count);
 }
 
 int	ft_putnbr_fd(int n, int fd)
@@ -50,13 +50,13 @@ int	ft_putnbr_fd(int n, int fd)
 	result = ft_putchar_fd(nbr % 10 + '0', fd);
 	if (result == -1)
 		return (-1);
-	return(result + count);
+	return (result + count);
 }
 
 static int	ft_putunbr_fd(unsigned int n, int fd)
 {
-	int count;
-	int result;
+	int	count;
+	int	result;
 
 	count = 0;
 	if (n >= 10)
@@ -69,13 +69,13 @@ static int	ft_putunbr_fd(unsigned int n, int fd)
 	result = ft_putchar_fd(n % 10 + '0', fd);
 	if (result == -1)
 		return (-1);
-	return(result + count);
+	return (result + count);
 }
 
 static int	ft_putnbr_base(unsigned long n, char *base, int len)
 {
 	int	count;
-	int result;
+	int	result;
 
 	count = 0;
 	if (n >= (unsigned long)len)
@@ -88,7 +88,7 @@ static int	ft_putnbr_base(unsigned long n, char *base, int len)
 	result = ft_putchar_fd(base[n % len], 1);
 	if (result == -1)
 		return (-1);
-	return(result + count);
+	return (result + count);
 }
 
 static int	ft_print_pointer(void *ptr)
