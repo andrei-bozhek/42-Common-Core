@@ -53,7 +53,7 @@ int	ft_putnbr_fd(int n, int fd)
 	return(result + count);
 }
 
-static int	ft_putunbr_fd(unsigned int n, int fd)
+int	ft_putunbr_fd(unsigned int n, int fd)
 {
 	int count;
 	int result;

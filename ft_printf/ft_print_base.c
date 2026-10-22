@@ -1,4 +1,6 @@
-static int	ft_putnbr_base(unsigned long n, char *base, int len)
+#include "ft_printf.h"
+
+int	ft_putnbr_base(unsigned long n, char *base, int len)
 {
 	int	count;
 	int	result;
@@ -17,7 +19,7 @@ static int	ft_putnbr_base(unsigned long n, char *base, int len)
 	return (result + count);
 }
 
-static int	ft_print_pointer(void *ptr)
+int	ft_print_pointer(void *ptr)
 {
 	int	count;
 	int	result;
