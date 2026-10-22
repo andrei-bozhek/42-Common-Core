@@ -2,17 +2,9 @@
 
 int	ft_putchar_fd(char c, int fd)
 {
-	return(write(fd, &c, 1));
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (write(fd, &c, 1) != 1)
+		return (-1);
+	return (1);
 }
 
 int	ft_putstr_fd(char *s, int fd)
@@ -97,29 +89,6 @@ static int	ft_putnbr_base(unsigned long n, char *base, int len)
 	if (result == -1)
 		return (-1);
 	return(result + count);
-	if (n >= 10)
-		ft_putunbr_fd(n / 10, fd);
-	ft_putchar_fd(n % 10 + '0', fd);
-}
-
-static void	ft_putnbr_base(unsigned long n, char *base, int len)
-{
-	if (n >= (unsigned long)len)
-		ft_putnbr_base(n / len, base, len);
-	ft_putchar_fd(base[n % len], 1);
-}
-
-static int	ft_base_numlen(unsigned long n, int base_len)
-{
-	int	len;
-
-	len = 1;
-	while (n >= (unsigned long)base_len)
-	{
-		n /= base_len;
-		len++;
-	}
-	return (len);
 }
 
 int	ft_printf(const char *format, ...)
@@ -172,8 +141,6 @@ int	ft_printf(const char *format, ...)
 				return (-1);
 			}
 			count += result;
-			ft_putnbr_base(un_int_value, "0123456789abcdef", 16);
-			count += ft_base_numlen(un_int_value, 16);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1] == 'X')
@@ -186,8 +153,6 @@ int	ft_printf(const char *format, ...)
 				return (-1);
 			}
 			count += result;
-			ft_putnbr_base(un_int_value, "0123456789ABCDEF", 16);
-			count += ft_base_numlen(un_int_value, 16);
 			i += 2;
 		}
 		else if (format[i] == '%' && format[i + 1] == 'p')
@@ -219,11 +184,6 @@ int	ft_printf(const char *format, ...)
 					return (-1);
 				}
 				count += result;
-			}
-				ft_putstr_fd("0x", 1);
-				count += 2;
-				ft_putnbr_base((unsigned long)pointer, "0123456789abcdef", 16);
-				count += ft_base_numlen((unsigned long)pointer, 16);
 			}
 			i += 2;
 		}
@@ -319,7 +279,7 @@ int	main(void)
 	ft_printf("count = %d\n", count);
 	count = ft_printf("%x\n", 256);
 	ft_printf("count = %d\n", count);
-	count = ft_printf("%x\n", 4294967295);
+	count = ft_printf("%x\n", UINT_MAX);
 	ft_printf("count = %d\n", count);
 	ft_printf("\n");
 	// %X
