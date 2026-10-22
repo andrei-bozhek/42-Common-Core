@@ -17,7 +17,7 @@ static int	ft_print_conversion(char type, va_list *args)
 	if (type == 'c')
 		return (ft_putchar_fd(va_arg(*args, int), 1));
 	if (type == 's')
-		return (ft_print_string(va_arg(*args, char *)));
+		return (ft_putstr_fd(va_arg(*args, char *), 1));
 	if (type == '%')
 		return (ft_putchar_fd('%', 1));
 	return (-1);

@@ -10,6 +10,8 @@ int	ft_putstr_fd(char *s, int fd)
 	int	count;
 	int	result;
 
+	if (s == NULL)
+		s = "(null)";
 	count = 0;
 	while (*s)
 	{
@@ -20,13 +22,6 @@ int	ft_putstr_fd(char *s, int fd)
 		s++;
 	}
 	return (count);
-}
-
-static int	ft_print_string(char *s)
-{
-	if (s == NULL)
-		s = "(null)";
-	return (ft_putstr_fd(s, 1));
 }
 
 int	ft_putnbr_fd(int n, int fd)
