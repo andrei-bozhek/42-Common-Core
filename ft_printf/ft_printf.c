@@ -138,6 +138,31 @@ static int	ft_print_conversion(char type, va_list *args)
 	return (-1);
 }
 
+static int	ft_parse_format(const char *format, va_list *args)
+{
+	int	i;
+	int	count;
+	int	result;
+
+	i = 0;
+	count = 0;
+	while (format[i])
+	{
+		if (format[i] == '%' && format[i + 1])
+		{
+			i++;
+			result = ft_print_conversion(format[i], args);
+		}
+		else
+			result = ft_putchar_fd(format[i], 1);
+		if (result == -1)
+			return (-1);
+		count += result;
+		i++;
+	}
+	return (count);
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
