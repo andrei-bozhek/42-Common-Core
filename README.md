@@ -27,19 +27,24 @@ This repository documents my projects and progress throughout the curriculum.
 
 | Project | Description | Subject |
 |:---|:---|:---:|
-| [Libft](./Libft/) | Build a reusable C library by recreating standard library functions and implementing additional utilities | [PDF](./Libft/Libft_subject.pdf) |
+| [Libft](./Libft/) | Build a reusable C library by recreating standard library functions and implementing additional utilities | [PDF](./subjects/Libft.pdf) |
+| [ft_printf](./ft_printf/) | Recreate core `printf` conversions using variadic arguments, format parsing, and decimal and hexadecimal output | [PDF](./subjects/ft_printf.pdf) |
+
+## Tests
+
+My testers for Libft and ft_printf are maintained in a separate repository. See the [42 Common Core Tests README](https://github.com/andrei-bozhek/42-Common-Core-Tests/blob/main/README.md) for usage instructions.
 
 ## Skills & Technologies
 
 - **Languages:** C
 - **Tools:** Git, Make, Unix shell
-- **Concepts:** Memory management, pointers, algorithms, modular programming
+- **Concepts:** Memory management, pointers, algorithms, modular programming, variadic functions, formatted output
 
 This section will grow as new projects are completed.
 
 ## Repository Structure
 
-Each project has its own directory containing source code, a project-specific README, and the corresponding subject PDF.
+Each project has its own directory containing source code, a Makefile, and a project-specific README. Subject PDFs are stored in the shared [subjects](./subjects/) directory.
 
 ## Previous Journey
 
