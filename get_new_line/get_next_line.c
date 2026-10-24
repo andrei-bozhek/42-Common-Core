@@ -64,4 +64,18 @@ char	*get_next_line(int fd)
 	line[j] = '\0';
 
 	// Keep the remaining characters
+	if (saved[i] == '\0')
+		rest = NULL;
+	else
+		rest = ft_strjoin("", saved + i);
+	if (saved[i] != '\0' && !rest)
+	{
+		free(line);
+		free(saved);
+		saved = NULL;
+		return (NULL);
+	}
+	free(saved);
+	saved = rest;
+	return (line);
 }
