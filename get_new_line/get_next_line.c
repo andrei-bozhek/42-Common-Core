@@ -6,6 +6,10 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*temp;
 	ssize_t		bytes_read;
+	char		*line;
+	char		*rest;
+	size_t		i;
+	size_t		j;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -38,22 +42,26 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 
-	// Next step: extract one line from saved
-	// Next step: keep the remaining characters
-	return (NULL);
-}
+	// Extract one line from saved
+	i = 0;
+	while (saved[i] && saved[i] != '\n')
+		i++;
+	if (saved[i] == '\n')
+		i++;
+	line = malloc(i + 1);
+	if (!line)
+	{
+		free(saved);
+		saved = NULL;
+		return (NULL);
+	}
+	j = 0;
+	while (j < i)
+	{
+		line[j] = saved[j];
+		j++;
+	}
+	line[j] = '\0';
 
-#include <stdio.h>
-
-int main(void)
-{
-	char	*result;
-
-	result = ft_strjoin("Wo", "rld");
-	if (!result)
-		return (1);
-	printf("Result: %s\n", result);
-	printf("Test: %s\n", strcmp(result, "World") == 0 ? "OK" : "FAIL");
-	free(result);
-	return (0);
+	// Keep the remaining characters
 }
