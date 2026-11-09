@@ -25,7 +25,6 @@ static char	*save_new_data(char *saved, char *buffer)
 	return (saved);
 }
 
-/* Read until saved contains '\n' or reading stops. */
 static char	*read_buffer(int fd, char *buffer, char *saved)
 {
 	ssize_t	bytes_read;
