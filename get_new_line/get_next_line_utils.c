@@ -6,7 +6,7 @@
 /*   By: abozhek <abozhek@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/25 20:09:34 by abozhek           #+#    #+#             */
-/*   Updated: 2026/10/25 20:09:35 by abozhek          ###   ########.fr       */
+/*   Updated: 2026/11/09 10:52:11 by abozhek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,28 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	result[i + j] = '\0';
 	return (result);
+}
+
+char	*copy_the_first_line(const char *saved)
+{
+	char	*line;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (saved[i] && saved[i] != '\n')
+		i++;
+	if (saved[i] == '\n')
+		i++;
+	line = malloc(i + 1);
+	if (!line)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		line[j] = saved[j];
+		j++;
+	}
+	line[j] = '\0';
+	return (line);
 }
