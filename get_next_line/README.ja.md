@@ -96,36 +96,60 @@ cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 \
 
 ### 実行例
 
-例えば、次のプログラムを `main.c` として保存します。
+次の例を `main.c` として保存し、上記のコマンドでコンパイルします。
+ファイル名を渡すとそのファイルを開き、引数を省略すると標準入力から読み込みます。
 
 ```c
 #include "get_next_line.h"
+#include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+	int		fd;
 	char	*line;
 
-	line = get_next_line(STDIN_FILENO);
+	if (argc > 2)
+		return (1);
+	fd = STDIN_FILENO;
+	if (argc == 2)
+	{
+		fd = open(argv[1], O_RDONLY);
+		if (fd < 0)
+			return (1);
+	}
+	line = get_next_line(fd);
 	while (line)
 	{
-		fputs(line, stdout);
+		printf("%s", line);
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = get_next_line(fd);
 	}
+	if (argc == 2)
+		close(fd);
 	return (0);
 }
 ```
 
-上記のコマンドでコンパイルした後、標準入力を通してテキストファイルを読み込みます。
+ファイル名を指定して読み込む場合：
 
 ```sh
+./program input.txt
+```
+
+標準入力から読み込む場合：
+
+```sh
+printf 'first\nsecond\n' | ./program
 ./program < input.txt
 ```
 
-開いたファイルから直接読み込む場合は、`STDIN_FILENO` の代わりに
-そのファイルディスクリプタを渡します。ファイルを開く処理と閉じる処理、
-返された各行の解放は、呼び出し側で行います。
+ループに入る前に `get_next_line` を呼び出し、最初の行を取得します。
+ループ内では、現在の行を表示して解放してから、次の行を取得します。
+`get_next_line` が `NULL` を返すとループを終了します。
+プログラムがファイルを開いた場合は、最後にそのファイルを閉じます。
 
 ## 参考資料
 

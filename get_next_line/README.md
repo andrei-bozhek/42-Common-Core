@@ -93,36 +93,61 @@ Use a positive value, for example `1`, `42`, or `1024`.
 
 ### Usage
 
-For example, save the following program as `main.c`:
+Save this example as `main.c` and compile it using the command above.
+Pass a filename to open it directly, or run the program without arguments
+to read from standard input.
 
 ```c
 #include "get_next_line.h"
+#include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+	int		fd;
 	char	*line;
 
-	line = get_next_line(STDIN_FILENO);
+	if (argc > 2)
+		return (1);
+	fd = STDIN_FILENO;
+	if (argc == 2)
+	{
+		fd = open(argv[1], O_RDONLY);
+		if (fd < 0)
+			return (1);
+	}
+	line = get_next_line(fd);
 	while (line)
 	{
-		fputs(line, stdout);
+		printf("%s", line);
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = get_next_line(fd);
 	}
+	if (argc == 2)
+		close(fd);
 	return (0);
 }
 ```
 
-Compile it using the command above, then read a text file through standard input:
+Read a file by name:
 
 ```sh
+./program input.txt
+```
+
+Read from standard input:
+
+```sh
+printf 'first\nsecond\n' | ./program
 ./program < input.txt
 ```
 
-To read an opened file directly, pass its file descriptor instead of
-`STDIN_FILENO`. The caller is responsible for opening and closing the file
-and freeing each returned line.
+The first call to `get_next_line` fetches a line before the loop checks it.
+Each iteration prints and frees the current line, then fetches the next one.
+The loop stops when `get_next_line` returns `NULL`. The program closes the file
+if it opened one.
 
 ## Resources
 
