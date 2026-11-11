@@ -11,6 +11,8 @@
   <img src="https://img.shields.io/badge/2026-Present-555555?style=flat-square" alt="2026 - Present">
 </p>
 
+English | [日本語](README.ja.md)
+
 ## About 42
 
 [42 Tokyo](https://42tokyo.jp/) is a peer-to-peer software engineering school based on project-based learning.
@@ -29,6 +31,7 @@ This repository documents my projects and progress throughout the curriculum.
 |:---|:---|:---:|
 | [Libft](./Libft/) | Build a reusable C library by recreating standard library functions and implementing additional utilities | [PDF](./subjects/Libft.pdf) |
 | [ft_printf](./ft_printf/) | Recreate core `printf` conversions using variadic arguments, format parsing, and decimal and hexadecimal output | [PDF](./subjects/ft_printf.pdf) |
+| [get_next_line](./get_next_line/) | Read from a file or standard input one line at a time using buffered reading, static variables, and dynamic memory allocation | [PDF](./subjects/get_next_line.pdf) |
 
 ## Tests
 
@@ -38,13 +41,13 @@ My testers for Libft and ft_printf are maintained in a separate repository. See 
 
 - **Languages:** C
 - **Tools:** Git, Make, Unix shell
-- **Concepts:** Memory management, pointers, algorithms, modular programming, variadic functions, formatted output
+- **Concepts:** Memory management, pointers, algorithms, modular programming, variadic functions, formatted output, file descriptors, buffered reading, static variables
 
 This section will grow as new projects are completed.
 
 ## Repository Structure
 
-Each project has its own directory containing source code, a Makefile, and a project-specific README. Subject PDFs are stored in the shared [subjects](./subjects/) directory.
+Each project has its own directory containing source code and a project-specific README. Projects that require a Makefile include one in their directory. The get_next_line documentation is available in [English](./get_next_line/README.md) and [Japanese](./get_next_line/README.ja.md). Subject PDFs are stored in the shared [subjects](./subjects/) directory.
 
 ## Previous Journey
 

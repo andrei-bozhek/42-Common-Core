@@ -1,5 +1,7 @@
 *This project has been created as part of the 42 curriculum by abozhek.*
 
+English | [日本語](README.ja.md)
+
 # ft_printf
 
 ## Description
