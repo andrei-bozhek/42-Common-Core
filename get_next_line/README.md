@@ -121,7 +121,7 @@ int	main(int argc, char **argv)
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("%s", line);
+		printf("get_next_line returned: %s", line);
 		free(line);
 		line = get_next_line(fd);
 	}
