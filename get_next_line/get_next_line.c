@@ -6,7 +6,7 @@
 /*   By: abozhek <abozhek@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/25 20:09:11 by abozhek           #+#    #+#             */
-/*   Updated: 2026/11/09 10:54:09 by abozhek          ###   ########.fr       */
+/*   Updated: 2026/11/21 18:34:55 by abozhek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ static char	*read_buffer(int fd, char *buffer, char *saved)
 	}
 	free(buffer);
 	if (bytes_read < 0 || !saved)
-	{
-		free(saved);
-		return (NULL);
-	}
+		return (clear_saved(&saved));
 	return (saved);
 }
 
@@ -57,10 +54,7 @@ static char	*read_saved(int fd, char *saved)
 
 	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
-	{
-		free(saved);
-		return (NULL);
-	}
+		return (clear_saved(&saved));
 	return (read_buffer(fd, buffer, saved));
 }
 
@@ -77,11 +71,9 @@ static char	*save_rest_and_return_line(char **saved, char *line)
 	if ((*saved)[i] != '\0' && !rest)
 	{
 		free(line);
-		free(*saved);
-		*saved = NULL;
-		return (NULL);
+		return clear_saved(saved);
 	}
-	free(*saved);
+	clear_saved(saved);
 	*saved = rest;
 	return (line);
 }
@@ -92,20 +84,12 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-		free(saved);
-		saved = NULL;
-		return (NULL);
-	}
+		return clear_saved(&saved);
 	saved = read_saved(fd, saved);
 	if (!saved)
 		return (NULL);
 	line = copy_the_first_line(saved);
 	if (!line)
-	{
-		free(saved);
-		saved = NULL;
-		return (NULL);
-	}
+		return clear_saved(&saved);
 	return (save_rest_and_return_line(&saved, line));
 }

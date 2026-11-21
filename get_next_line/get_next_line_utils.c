@@ -6,7 +6,7 @@
 /*   By: abozhek <abozhek@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/25 20:09:34 by abozhek           #+#    #+#             */
-/*   Updated: 2026/11/09 10:52:11 by abozhek          ###   ########.fr       */
+/*   Updated: 2026/11/21 18:39:51 by abozhek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,11 @@ char	*copy_the_first_line(const char *saved)
 	}
 	line[j] = '\0';
 	return (line);
+}
+
+char	*clear_saved(char **saved)
+{
+	free(*saved);
+	*saved = NULL;
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: abozhek <abozhek@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/25 20:09:31 by abozhek           #+#    #+#             */
-/*   Updated: 2026/11/09 10:56:02 by abozhek          ###   ########.fr       */
+/*   Updated: 2026/11/21 16:54:13 by abozhek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*copy_the_first_line(const char *saved);
+char	*clear_saved(char **saved);
 
 #endif
