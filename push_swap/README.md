@@ -52,6 +52,128 @@ Swaps and rotations leave stacks with fewer than two values as they are.
 A push from an empty stack has no effect. For combined instructions, each
 stack is handled independently.
 
+## Algorithms and Data Structures
+
+### Ranking and Measuring Disorder
+
+The program validates its inputs and gives each number a rank based on how
+many input values are smaller. For example, `40 -10 7` becomes `2 0 1`.
+Ranks preserve the order of the original values and give every input the rank
+range from `0` to `n - 1`, where `n` is the number of values.
+
+The program also counts pairs that appear in the wrong order. In
+`3 1 2`, the pairs `(3, 1)` and `(3, 2)` are out of order. Two out of
+three pairs gives a disorder of `66.67%`. A sorted list has zero disorder.
+A reverse-sorted list of at least two distinct values has 100% disorder.
+The program defines disorder as zero for lists shorter than two values.
+
+### Sorting Strategies
+
+| Selector | Method | Move upper bound |
+| --- | --- | --- |
+| `--simple` | Move the smallest remaining values out of A one at a time. | O(n²) |
+| `--medium` | Move consecutive groups of ranks to B, then return them in order. | O(n√n) |
+| `--complex` | Sort by the binary digits of the ranks. | O(n log n) |
+| `--adaptive` | Choose one of the three methods from the original disorder. | Depends on the selected method. |
+
+Expand a **▶ Watch** section below to see the corresponding strategy in action.
+
+- **Simple.** Find the smallest value in A, rotate it to the top using the
+  shorter direction, and push it to B. Repeat while more than three values
+  remain and A still needs sorting. Sort the remaining values if necessary,
+  then push B back to A so the smallest value ends up on top. There are at
+  most n extractions, each with at most O(n) rotations, for O(n²) moves.
+
+  <details>
+  <summary><strong>▶ Watch simple sorting</strong></summary>
+
+  ![Animation of simple sorting with two stacks](assets/push_swap_simple_sort.gif)
+
+  </details>
+  </br>
+
+- **Medium.** Split the ranks into groups about √n values wide. Process the
+  groups from lowest to highest, rotating A until a value in the current
+  group reaches the top and then pushing it to B. Rotate values in the lower
+  half of each group to the bottom of B. To rebuild A, repeatedly bring
+  B's largest remaining value to the top and push it to A. For a group
+  width k, collecting each group takes at most one pass through the remaining
+  A, for O(n²/k) moves overall. In B, each group lies in two runs around
+  the earlier groups. Removing it costs O(k²) moves within those runs
+  and at most O(n) moves to cross the earlier groups between the runs.
+  Over all groups the total is O(nk + n²/k), which becomes O(n√n) with
+  a group width of about √n.
+
+  <details>
+  <summary><strong>▶ Watch chunk-based sorting</strong></summary>
+
+  ![Animation of rank groups moving between two stacks](assets/push_swap_chunk_sort.gif)
+
+  </details>
+  </br>
+
+- **Complex.** Use binary radix sort, starting with the rightmost bit of each
+  rank. For each bit, push values with a zero to B and rotate values with a
+  one in A. Return every value in B to A. Each pass keeps the relative order
+  within the two groups, so processing the bits from right to left sorts the
+  ranks. There are at most ⌈log₂(n)⌉ passes for an unsorted input, with
+  at most 2n moves per pass.
+
+  <details>
+  <summary><strong>▶ Watch binary radix sort</strong></summary>
+
+  ![Animation of binary radix sort using two stacks](assets/push_swap_radix_sort.gif)
+
+  </details>
+  </br>
+
+- **Adaptive.** Measure disorder once before moving anything. Use simple
+  below 20%, medium from 20% up to but excluding 50%, and complex from
+  50% upward. These thresholds come from the assignment. For low disorder,
+  simple extraction can stop as soon as what remains in A is sorted. For
+  medium disorder, processing ranks in groups reduces repeated passes over
+  A. For high disorder, radix sort gives a predictable limit on the number
+  of passes. The decision uses the original fraction before the percentage
+  is rounded for display.
+
+All modes skip sorting when A is already sorted. Unsorted inputs of at most
+five values use the small minimum-extraction routine. The benchmark still
+reports the chosen strategy and its move complexity for these cases.
+
+### Move Count, Runtime, and Storage
+
+The bounds in the strategy table describe how many instructions the program
+can emit as the input grows. The program also spends time validating values,
+computing ranks, and measuring disorder. These steps compare pairs of values
+and take O(n²) time. The simple and medium strategies also scan their stacks
+to find the next minimum or maximum.
+
+Each stack uses a circular array. The program tracks the top by index, so a
+rotation can update the index and move one value instead of shifting the
+whole array. Each stack instruction takes constant time to apply in memory.
+The arrays for the stacks and temporary ranks take O(L) space, where L is
+the length of the command-line input text. This is O(n) for ordinary
+fixed-width integer arguments with bounded whitespace per value. All
+sorting strategies use constant extra workspace beyond the arrays and
+write each instruction as it goes.
+
+### Source Files
+
+| File | Responsibility |
+| --- | --- |
+| `main.c` | Main entry point, strategy selection, and sorting flow. |
+| `parse.c` | Argument parsing, flag handling, and number validation. |
+| `rank.c` | Duplicate detection, rank conversion, and disorder measurement. |
+| `stack.c` | Circular stacks and instruction execution. |
+| `names.c` | Instruction names shared by the sorter and checker. |
+| `sort.c` | Sortedness checks, small-input sorting, minimum extraction, and radix sorting. |
+| `medium.c` | Group-based sorting. |
+| `bench.c` | Benchmark reporting. |
+| `checker_bonus.c` | Bonus entry point, instruction reading, and result reporting. |
+| `utils.c` | Output, comparison, memory cleanup, and error handling. |
+| `push_swap.h` | Shared data structures and function declarations. |
+| `Makefile` | Build and cleanup rules for both programs. |
+
 ## Instructions
 
 ### Compilation
@@ -352,99 +474,6 @@ OK
 
 Both sample runs reached the good-performance tier. The move count depends
 on the generated input.
-
-## Algorithms and Data Structures
-
-### Ranking and Measuring Disorder
-
-The program validates its inputs and gives each number a rank based on how
-many input values are smaller. For example, `40 -10 7` becomes `2 0 1`.
-Ranks preserve the order of the original values and give every input the rank
-range from `0` to `n - 1`, where `n` is the number of values.
-
-The program also counts pairs that appear in the wrong order. In
-`3 1 2`, the pairs `(3, 1)` and `(3, 2)` are out of order. Two out of
-three pairs gives a disorder of `66.67%`. A sorted list has zero disorder.
-A reverse-sorted list of at least two distinct values has 100% disorder.
-The program defines disorder as zero for lists shorter than two values.
-
-### Sorting Strategies
-
-| Selector | Method | Move upper bound |
-| --- | --- | --- |
-| `--simple` | Move the smallest remaining values out of A one at a time. | O(n²) |
-| `--medium` | Move consecutive groups of ranks to B, then return them in order. | O(n√n) |
-| `--complex` | Sort by the binary digits of the ranks. | O(n log n) |
-| `--adaptive` | Choose one of the three methods from the original disorder. | Depends on the selected method. |
-
-- **Simple.** Find the smallest value in A, rotate it to the top using the
-  shorter direction, and push it to B. Repeat while more than three values
-  remain and A still needs sorting. Sort the remaining values if necessary,
-  then push B back to A so the smallest value ends up on top. There are at
-  most n extractions, each with at most O(n) rotations, for O(n²) moves.
-- **Medium.** Split the ranks into groups about √n values wide. Process the
-  groups from lowest to highest, rotating A until a value in the current
-  group reaches the top and then pushing it to B. Rotate values in the lower
-  half of each group to the bottom of B. To rebuild A, repeatedly bring
-  B's largest remaining value to the top and push it to A. For a group
-  width k, collecting each group takes at most one pass through the remaining
-  A, for O(n²/k) moves overall. In B, each group lies in two runs around
-  the earlier groups. Removing it costs O(k²) moves within those runs
-  and at most O(n) moves to cross the earlier groups between the runs.
-  Over all groups the total is O(nk + n²/k), which becomes O(n√n) with
-  a group width of about √n.
-- **Complex.** Use binary radix sort, starting with the rightmost bit of each
-  rank. For each bit, push values with a zero to B and rotate values with a
-  one in A. Return every value in B to A. Each pass keeps the relative order
-  within the two groups, so processing the bits from right to left sorts the
-  ranks. There are at most ⌈log₂(n)⌉ passes for an unsorted input, with
-  at most 2n moves per pass.
-- **Adaptive.** Measure disorder once before moving anything. Use simple
-  below 20%, medium from 20% up to but excluding 50%, and complex from
-  50% upward. These thresholds come from the assignment. For low disorder,
-  simple extraction can stop as soon as what remains in A is sorted. For
-  medium disorder, processing ranks in groups reduces repeated passes over
-  A. For high disorder, radix sort gives a predictable limit on the number
-  of passes. The decision uses the original fraction before the percentage
-  is rounded for display.
-
-All modes skip sorting when A is already sorted. Unsorted inputs of at most
-five values use the small minimum-extraction routine. The benchmark still
-reports the chosen strategy and its move complexity for these cases.
-
-### Move Count, Runtime, and Storage
-
-The bounds in the strategy table describe how many instructions the program
-can emit as the input grows. The program also spends time validating values,
-computing ranks, and measuring disorder. These steps compare pairs of values
-and take O(n²) time. The simple and medium strategies also scan their stacks
-to find the next minimum or maximum.
-
-Each stack uses a circular array. The program tracks the top by index, so a
-rotation can update the index and move one value instead of shifting the
-whole array. Each stack instruction takes constant time to apply in memory.
-The arrays for the stacks and temporary ranks take O(L) space, where L is
-the length of the command-line input text. This is O(n) for ordinary
-fixed-width integer arguments with bounded whitespace per value. All
-sorting strategies use constant extra workspace beyond the arrays and
-write each instruction as it goes.
-
-### Source Files
-
-| File | Responsibility |
-| --- | --- |
-| `main.c` | Main entry point, strategy selection, and sorting flow. |
-| `parse.c` | Argument parsing, flag handling, and number validation. |
-| `rank.c` | Duplicate detection, rank conversion, and disorder measurement. |
-| `stack.c` | Circular stacks and instruction execution. |
-| `names.c` | Instruction names shared by the sorter and checker. |
-| `sort.c` | Sortedness checks, small-input sorting, minimum extraction, and radix sorting. |
-| `medium.c` | Group-based sorting. |
-| `bench.c` | Benchmark reporting. |
-| `checker_bonus.c` | Bonus entry point, instruction reading, and result reporting. |
-| `utils.c` | Output, comparison, memory cleanup, and error handling. |
-| `push_swap.h` | Shared data structures and function declarations. |
-| `Makefile` | Build and cleanup rules for both programs. |
 
 ## Resources
 
