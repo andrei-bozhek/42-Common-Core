@@ -32,22 +32,25 @@ This repository documents my projects and progress throughout the curriculum.
 | [Libft](./Libft/) | Build a reusable C library by recreating standard library functions and implementing additional utilities | [PDF](./subjects/Libft.pdf) |
 | [ft_printf](./ft_printf/) | Recreate core `printf` conversions using variadic arguments, format parsing, and decimal and hexadecimal output | [PDF](./subjects/ft_printf.pdf) |
 | [get_next_line](./get_next_line/) | Read from a file or standard input one line at a time using buffered reading, static variables, and dynamic memory allocation | [PDF](./subjects/get_next_line.pdf) |
+| [push_swap](./push_swap/) | Sort integers with two stacks and 11 allowed operations, select a strategy based on input disorder, and verify the result with a bonus checker | [PDF](./subjects/push_swap.pdf) |
 
 ## Tests
 
 My testers for Libft and ft_printf are maintained in a separate repository. See the [42 Common Core Tests README](https://github.com/andrei-bozhek/42-Common-Core-Tests/blob/main/README.md) for usage instructions.
 
+The Push_swap README includes commands for generating test inputs, measuring operation counts, and checking the results with both the bonus checker and the Linux checker supplied with the assignment. [Push_swap testing instructions](./push_swap/README.md#testing-with-the-supplied-linux-checker)
+
 ## Skills & Technologies
 
 - **Languages:** C
 - **Tools:** Git, Make, Unix shell
-- **Concepts:** Memory management, pointers, algorithms, modular programming, variadic functions, formatted output, file descriptors, buffered reading, static variables
+- **Concepts:** Memory management, pointers, algorithms, modular programming, variadic functions, formatted output, file descriptors, buffered reading, static variables, stack operations, adaptive sorting, algorithmic complexity
 
 This section will grow as new projects are completed.
 
 ## Repository Structure
 
-Each project has its own directory containing source code and a project-specific README. Projects that require a Makefile include one in their directory. The get_next_line documentation is available in [English](./get_next_line/README.md) and [Japanese](./get_next_line/README.ja.md). Subject PDFs are stored in the shared [subjects](./subjects/) directory.
+Each project has its own directory with source code, English and Japanese README files, and a Makefile where required. Subject PDFs are stored in the shared [subjects](./subjects/) directory.
 
 ## Previous Journey
 
