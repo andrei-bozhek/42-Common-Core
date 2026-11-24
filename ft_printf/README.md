@@ -149,7 +149,7 @@ The code is divided by responsibility:
 
 ## Resources
 
-- **Official ft_printf subject** — required conversions,
+- **[Official ft_printf subject](../subjects/ft_printf.pdf)** — required conversions,
   allowed external functions, submission requirements, and bonus scope.
 - **Unix manual pages (`man`)** — references for formatted output,
   variadic arguments, output errors, and static libraries.
