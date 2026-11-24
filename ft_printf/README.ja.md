@@ -148,7 +148,7 @@ cc -Wall -Wextra -Werror main.c libftprintf.a -o program
 
 ## 参考資料
 
-- **ft_printf の公式課題文** — 必須の変換指定子、使用可能な外部関数、
+- **[ft_printf の公式課題文](../subjects/ft_printf.pdf)** — 必須の変換指定子、使用可能な外部関数、
   提出要件、ボーナス課題の範囲。
 - **Unix マニュアルページ（`man`）** — 書式付き出力、可変長引数、
   出力エラー、静的ライブラリに関する資料。
