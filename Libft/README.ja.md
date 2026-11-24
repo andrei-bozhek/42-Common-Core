@@ -155,7 +155,7 @@ cc -Wall -Wextra -Werror main.c libft.a -o program
 
 Libft の作成時には、次の資料を参照しました。
 
-- **Libft の公式課題文** — プロジェクトの要件、関数プロトタイプ、
+- **[Libft の公式課題文](../subjects/Libft.pdf)** — プロジェクトの要件、関数プロトタイプ、
   使用可能な外部関数、期待される動作。
 - **Unix マニュアルページ（`man`）** — 元となる libc 関数の動作、
   戻り値、境界条件。

@@ -157,7 +157,7 @@ Then run:
 
 The following resources were used while working on Libft:
 
-- **Official Libft subject** — project requirements, function prototypes,
+- **[Official Libft subject](../subjects/Libft.pdf)** — project requirements, function prototypes,
   allowed external functions, and expected behavior.
 - **Unix manual pages (`man`)** — reference for the original libc functions,
   their return values, edge cases, and expected behavior.
