@@ -151,7 +151,7 @@ if it opened one.
 
 ## Resources
 
-- **Official get_next_line subject** — required behavior, allowed external
+- **[Official get_next_line subject](../subjects/get_next_line.pdf)** — required behavior, allowed external
   functions, buffer size, and submission requirements.
 - **Unix manual pages (`man`)** — reading from file descriptors, allocation,
   and releasing memory.

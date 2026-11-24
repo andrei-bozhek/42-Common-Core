@@ -153,7 +153,7 @@ printf 'first\nsecond\n' | ./program
 
 ## 参考資料
 
-- **get_next_line の公式課題文** — 必要な動作、使用可能な外部関数、
+- **[get_next_line の公式課題文](../subjects/get_next_line.pdf)** — 必要な動作、使用可能な外部関数、
   バッファサイズ、提出要件。
 - **Unix マニュアルページ（`man`）** — ファイルディスクリプタからの読み込み、
   メモリの確保と解放。
