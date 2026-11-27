@@ -31,7 +31,7 @@ does not support alternating between multiple file descriptors.
 | File | Description |
 |---|---|
 | `get_next_line.c` | Reading, saved data management, and the main function. |
-| `get_next_line_utils.c` | String helpers and copying the first line. |
+| `get_next_line_utils.c` | String helpers, copying the first line, and clearing saved data. |
 | `get_next_line.h` | Function prototypes, includes, and the default buffer size. |
 
 ### Functions
@@ -44,6 +44,7 @@ does not support alternating between multiple file descriptors.
 | `save_new_data` | Appends a block to the saved data and frees the old string. |
 | `copy_the_first_line` | Allocates and copies the first line from the saved data. |
 | `save_rest_and_return_line` | Keeps the remainder for the next call and returns the line. |
+| `clear_saved` | Frees the saved string, sets its pointer to `NULL`, and returns `NULL`. |
 | `ft_strlen` | Returns the length of a string. |
 | `ft_strchr` | Finds a character in a string. |
 | `ft_strjoin` | Allocates and joins two strings. |
@@ -70,6 +71,12 @@ The algorithm was chosen for its straightforward use of C strings and explicit
 memory ownership. It reads as needed rather than loading the entire file before
 returning a line. The temporary buffer is freed after reading, and saved data is
 freed when replaced or when an error occurs.
+
+`clear_saved` groups the repeated cleanup steps. It receives a `char **` so it
+can reset the supplied pointer after freeing the string. Error paths can return
+its `NULL` result directly. When saving the remainder, the old data is cleared
+before `saved` is assigned the new remainder. If allocating the remainder fails,
+the newly copied line is also freed before returning `NULL`.
 
 The tradeoff is repeated allocation and copying while assembling a long line.
 With a small fixed buffer size, this can lead to quadratic time in the line
