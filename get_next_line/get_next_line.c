@@ -6,7 +6,7 @@
 /*   By: abozhek <abozhek@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/25 20:09:11 by abozhek           #+#    #+#             */
-/*   Updated: 2026/11/21 18:34:55 by abozhek          ###   ########.fr       */
+/*   Updated: 2026/11/27 17:27:33 by abozhek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	*save_rest_and_return_line(char **saved, char *line)
 	if ((*saved)[i] != '\0' && !rest)
 	{
 		free(line);
-		return clear_saved(saved);
+		return (clear_saved(saved));
 	}
 	clear_saved(saved);
 	*saved = rest;
@@ -84,12 +84,12 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return clear_saved(&saved);
+		return (clear_saved(&saved));
 	saved = read_saved(fd, saved);
 	if (!saved)
 		return (NULL);
 	line = copy_the_first_line(saved);
 	if (!line)
-		return clear_saved(&saved);
+		return (clear_saved(&saved));
 	return (save_rest_and_return_line(&saved, line));
 }
