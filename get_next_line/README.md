@@ -79,7 +79,7 @@ length.
 
 ### Compilation
 
-No Makefile is required. Compile the two source files together with your program.
+Compile the two source files together with your program.
 Run the following commands from the directory containing `get_next_line.c`.
 
 ```sh
